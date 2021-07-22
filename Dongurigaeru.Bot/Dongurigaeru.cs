@@ -30,9 +30,9 @@ namespace Dongurigaeru.Bot
     {
         internal static void Main()
         {
-            if (!File.Exists(Settings.FilePath))
+            if (!File.Exists(SettingsService.FilePath))
             {
-                var settings = Settings.Create();
+                var settings = SettingsService.Create();
                 Console.WriteLine("First time setup, please enter a Discord token: ");
 
                 settings.Discord.Token = Console.ReadLine();

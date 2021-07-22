@@ -32,14 +32,14 @@ namespace Dongurigaeru.Bot.Core
     {
         private MatchmakingSettings _matchmakingSettings;
         private Glicko2 _calculator;
-        private Database _database;
+        private DatabaseService _database;
         private List<Player> _queue0 = new();
         private List<Player> _queue1 = new();
         private List<Player> _queue2 = new();
 
         public event EventHandler<MatchMadeEventArgs> MatchMade;
 
-        public Matchmaker(MatchmakingSettings settings, Glicko2 g2, Database db)
+        public Matchmaker(MatchmakingSettings settings, Glicko2 g2, DatabaseService db)
         {
             _matchmakingSettings = settings;
             _calculator = g2;
@@ -111,7 +111,7 @@ namespace Dongurigaeru.Bot.Core
         /// <returns></returns>
         public async Task<Player> CreatePlayer(int id)
         {
-            using var db = _database.Get();
+            using var db = _database.Context;
             return await db.Players.FindAsync(id);
         }
 

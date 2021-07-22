@@ -23,12 +23,13 @@ using Dongurigaeru.Bot.Data;
 
 namespace Dongurigaeru.Bot.Services
 {
-    public class Settings
+    public class SettingsService
     {
         private const string FILE_NAME = "settings.json";
-        public static string FilePath { get; } = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), FILE_NAME);
-        private DongurigaeruSettings _settings;
         private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
+
+        public static string FilePath { get; } = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), FILE_NAME);
+        public DongurigaeruSettings Settings { get; private set; }
 
         public static DongurigaeruSettings Create()
         {
@@ -39,27 +40,22 @@ namespace Dongurigaeru.Bot.Services
 
         public void Load()
         {
-            _settings = JsonSerializer.Deserialize<DongurigaeruSettings>(File.ReadAllText(FilePath));
+            Settings = JsonSerializer.Deserialize<DongurigaeruSettings>(File.ReadAllText(FilePath));
         }
 
         public void Save()
         {
-            File.WriteAllText(FilePath, JsonSerializer.Serialize(_settings, _jsonOptions));
+            File.WriteAllText(FilePath, JsonSerializer.Serialize(Settings, _jsonOptions));
         }
 
         public async Task SaveAsync()
         {
-            await JsonSerializer.SerializeAsync(File.OpenWrite(FilePath), _settings, _jsonOptions);
-        }
-
-        public DongurigaeruSettings Get()
-        {
-            return _settings;
+            await JsonSerializer.SerializeAsync(File.OpenWrite(FilePath), Settings, _jsonOptions);
         }
 
         public void Set(DongurigaeruSettings settings)
         {
-            _settings = settings;
+            Settings = settings;
         }
     }
 }
