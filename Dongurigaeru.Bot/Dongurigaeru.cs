@@ -11,7 +11,7 @@ namespace Dongurigaeru.Bot
 {
     public static class Program
     {
-        internal static void Main() 
+        internal static void Main()
         {
             if (!File.Exists(Settings.FilePath))
             {
@@ -20,7 +20,7 @@ namespace Dongurigaeru.Bot
 
                 settings.Discord.Token = Console.ReadLine();
                 Console.WriteLine("Would you like to continue with the default settings? (Y/n)");
-                
+
                 if (Console.ReadLine().ToLower() == "n")
                 {
                     Console.WriteLine("Exiting...");
@@ -58,7 +58,7 @@ namespace Dongurigaeru.Bot
 
             Commands = Client.UseCommandsNext(new CommandsNextConfiguration
             {
-                StringPrefixes = new string[] {Settings.Discord.Prefix},
+                StringPrefixes = new string[] { Settings.Discord.Prefix },
                 CaseSensitive = false,
                 EnableDms = false
             });

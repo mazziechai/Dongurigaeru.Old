@@ -15,5 +15,5 @@
 
 namespace Dongurigaeru.Bot.Commands
 {
-    
+
 }
