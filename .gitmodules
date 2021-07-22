@@ -1,0 +1,3 @@
+[submodule "Hydrangea.Glicko2"]
+	path = Hydrangea.Glicko2
+	url = https://github.com/mazziechai/Hydrangea.Glicko2
