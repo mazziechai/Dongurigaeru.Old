@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dongurigaeru.Bot", "src\Dongurigaeru.Bot\Dongurigaeru.Bot.csproj", "{3FDB669C-80D4-4190-88D9-C888C855638F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dongurigaeru.Bot", "Dongurigaeru.Bot\Dongurigaeru.Bot.csproj", "{3FDB669C-80D4-4190-88D9-C888C855638F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

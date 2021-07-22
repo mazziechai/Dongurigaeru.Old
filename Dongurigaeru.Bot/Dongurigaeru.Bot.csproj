@@ -24,6 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="..\..\include\Hydrangea.Glicko2.dll"/>
+    <ProjectReference Include="..\..\include\Hydrangea.Glicko2.dll"/>
   </ItemGroup>
 </Project>

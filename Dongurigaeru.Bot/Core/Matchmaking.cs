@@ -113,7 +113,7 @@ namespace Dongurigaeru.Bot.Core
             return await db.Players.FindAsync(id);
         }
 
-        private void MatchmakingLoop()
+        private Task MatchmakingLoop()
         {
             while (true)
             {
