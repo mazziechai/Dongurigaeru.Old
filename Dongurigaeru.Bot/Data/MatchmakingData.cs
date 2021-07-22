@@ -25,7 +25,7 @@ namespace Dongurigaeru.Bot.Data
     /// <summary>
     /// Data about a player, contains their rating information.
     /// </summary>
-    public class Player
+    public record Player
     {
         [Column("id")]
         [Key]
@@ -57,7 +57,7 @@ namespace Dongurigaeru.Bot.Data
     /// <summary>
     /// A recorded match.
     /// </summary>
-    public class Match
+    public record Match
     {
         [Column("id")]
         [Key]
@@ -89,7 +89,7 @@ namespace Dongurigaeru.Bot.Data
     /// <summary>
     /// All the matches completed during a Glicko-2 rating period.
     /// </summary>
-    public class RatingPeriod
+    public record RatingPeriod
     {
         [Column("start_time")]
         [Key]
@@ -109,7 +109,7 @@ namespace Dongurigaeru.Bot.Data
     /// in the database in case the bot is restarted or crashes so the
     /// match can still be reported.
     /// </summary>
-    public class PendingMatch
+    public record PendingMatch
     {
         [Column("id")]
         [Key]

@@ -16,24 +16,53 @@
 // along with Dongurigaeru.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Dongurigaeru.Bot.Data;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dongurigaeru.Bot.Services
 {
-    public class Database
+    public class DatabaseService
     {
-        private readonly DatabaseContext _db;
+        private readonly DatabaseSettings _dbSettings;
 
-        public Database(Settings settings)
+        public DatabaseContext Context
         {
-            _db = new DatabaseContext(settings.Get().Database);
+            get
+            {
+                return new DatabaseContext(_dbSettings);
+            }
         }
 
-        public DatabaseContext Get()
+        public DatabaseService(SettingsService settings)
         {
-            return _db;
+            _dbSettings = settings.Settings.Database;
+        }
+
+        /// <summary>
+        /// Batch updates players in the database from a List of those players
+        /// to be updated.
+        /// </summary>
+        /// <param name="players"></param>
+        /// <returns></returns>
+        public async Task UpdatePlayers(List<Player> players)
+        {
+            using var db = Context;
+            foreach (var player in players)
+            {
+                var query = await db.Players.FindAsync(player.DiscordId);
+
+                if (query is not null)
+                {
+                    db.Entry(query).CurrentValues.SetValues(player);
+                }
+                else
+                {
+                    db.Players.Add(player);
+                }
+            }
         }
     }
 
