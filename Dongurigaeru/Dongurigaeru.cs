@@ -18,13 +18,13 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Dongurigaeru.Bot.Data;
-using Dongurigaeru.Bot.Services;
+using Dongurigaeru.Data;
+using Dongurigaeru.Services;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using Microsoft.Extensions.Logging;
 
-namespace Dongurigaeru.Bot
+namespace Dongurigaeru
 {
     public static class Program
     {

@@ -18,7 +18,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace Dongurigaeru.Bot.Data
+namespace Dongurigaeru.Data
 {
     public class DongurigaeruSettings
     {

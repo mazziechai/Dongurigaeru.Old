@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Dongurigaeru.Bot.Data
+namespace Dongurigaeru.Data
 {
     /// <summary>
     /// Data about a player, contains their rating information.

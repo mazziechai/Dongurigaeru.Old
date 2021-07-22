@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Dongurigaeru.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace Dongurigaeru.Bot.Commands
+namespace Dongurigaeru.Services.Ranked
 {
 
 }

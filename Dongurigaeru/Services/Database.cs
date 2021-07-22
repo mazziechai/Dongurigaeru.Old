@@ -18,11 +18,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Dongurigaeru.Bot.Data;
+using Dongurigaeru.Data;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
-namespace Dongurigaeru.Bot.Services
+namespace Dongurigaeru.Services
 {
     public class DatabaseService
     {
@@ -47,7 +47,7 @@ namespace Dongurigaeru.Bot.Services
         /// </summary>
         /// <param name="players"></param>
         /// <returns></returns>
-        public async Task UpdatePlayers(List<Player> players)
+        public async Task UpdatePlayers(List<PlayerInfo> players)
         {
             using var db = Context;
             foreach (var player in players)
@@ -68,7 +68,7 @@ namespace Dongurigaeru.Bot.Services
 
     public class DatabaseContext : DbContext
     {
-        public DbSet<Player> Players { get; set; }
+        public DbSet<PlayerInfo> Players { get; set; }
         public DbSet<Match> Matches { get; set; }
         public DbSet<RatingPeriod> RatingPeriods { get; set; }
         public DbSet<PendingMatch> PendingMatches { get; set; }

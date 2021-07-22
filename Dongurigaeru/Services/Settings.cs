@@ -19,9 +19,9 @@ using System.IO;
 using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Dongurigaeru.Bot.Data;
+using Dongurigaeru.Data;
 
-namespace Dongurigaeru.Bot.Services
+namespace Dongurigaeru.Services
 {
     public class SettingsService
     {
