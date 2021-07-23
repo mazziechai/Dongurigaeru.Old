@@ -42,7 +42,7 @@ namespace Dongurigaeru.Data
 
         [Column("rating_deviation")]
         [Required]
-        public double RatingDeviation { get; set; }
+        public double Deviation { get; set; }
 
         [Column("volatility")]
         [Required]
