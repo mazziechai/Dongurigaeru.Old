@@ -30,7 +30,8 @@ namespace Dongurigaeru.Data
         [Column("id")]
         [Key]
         [Required]
-        public int DiscordId { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int Id { get; set; }
 
         [Column("display_name")]
         public string DisplayName { get; set; }
@@ -48,7 +49,7 @@ namespace Dongurigaeru.Data
         public double Volatility { get; set; }
 
         [Column("matches")]
-        public List<Match> Matches { get; set; }
+        public List<MatchInfo> Matches { get; set; }
 
         [Column("platforms")]
         public List<string> Platforms { get; set; }
@@ -57,7 +58,7 @@ namespace Dongurigaeru.Data
     /// <summary>
     /// A recorded match.
     /// </summary>
-    public class Match
+    public class MatchInfo
     {
         [Column("id")]
         [Key]
@@ -65,16 +66,11 @@ namespace Dongurigaeru.Data
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Column("time")]
-        [Required]
-        public DateTime Time { get; set; }
-
         [Column("player1")]
         [Required]
         public PlayerInfo Player1 { get; set; }
 
         [Column("player1_score")]
-        [Required]
         public int Player1Score { get; set; }
 
         [Column("player2")]
@@ -82,14 +78,27 @@ namespace Dongurigaeru.Data
         public PlayerInfo Player2 { get; set; }
 
         [Column("player2_score")]
-        [Required]
         public int Player2Score { get; set; }
+        
+        [Column("start_time")]
+        public DateTime StartTime { get; set; }
+
+        [Column("end_time")]
+        public DateTime EndTime { get; set; }
+
+        [Column("in_progress")]
+        [Required]
+        public bool InProgress { get; set; }
+
+        [Column("completed")]
+        [Required]
+        public bool Completed { get; set; }
     }
 
     /// <summary>
     /// All the matches completed during a Glicko-2 rating period.
     /// </summary>
-    public class RatingPeriod
+    public class RatingPeriodInfo
     {
         [Column("start_time")]
         [Key]
@@ -101,32 +110,6 @@ namespace Dongurigaeru.Data
         public DateTime EndTime { get; set; }
 
         [Column("matches")]
-        public List<Match> Matches { get; set; }
-    }
-
-    /// <summary>
-    /// Information about a match currently being played. This is stored
-    /// in the database in case the bot is restarted or crashes so the
-    /// match can still be reported.
-    /// </summary>
-    public class PendingMatch
-    {
-        [Column("id")]
-        [Key]
-        [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
-        [Column("accepted")]
-        [Required]
-        public bool Accepted { get; set; }
-
-        [Column("player1")]
-        [Required]
-        public PlayerInfo Player1 { get; set; }
-
-        [Column("player2")]
-        [Required]
-        public PlayerInfo Player2 { get; set; }
+        public List<MatchInfo> Matches { get; set; }
     }
 }
