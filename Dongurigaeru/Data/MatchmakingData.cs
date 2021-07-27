@@ -1,19 +1,17 @@
 // Copyright (C) 2021 mazziechai
 // 
-// This file is part of Dongurigaeru.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
 // 
-// Dongurigaeru is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-// 
-// Dongurigaeru is distributed in the hope that it will be useful,
+// This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
+// GNU Affero General Public License for more details.
 // 
-// You should have received a copy of the GNU General Public License
-// along with Dongurigaeru.  If not, see <http://www.gnu.org/licenses/>.
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
@@ -71,15 +69,15 @@ namespace Dongurigaeru.Data
         public PlayerInfo Player1 { get; set; }
 
         [Column("player1_score")]
-        public int Player1Score { get; set; }
+        public double Player1Score { get; set; }
 
         [Column("player2")]
         [Required]
         public PlayerInfo Player2 { get; set; }
 
         [Column("player2_score")]
-        public int Player2Score { get; set; }
-        
+        public double Player2Score { get; set; }
+
         [Column("start_time")]
         public DateTime StartTime { get; set; }
 
