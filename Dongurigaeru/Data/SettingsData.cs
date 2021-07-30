@@ -22,19 +22,19 @@ namespace Dongurigaeru.Data
     public class DongurigaeruSettings
     {
         [JsonPropertyName("general")]
-        public GeneralSettings General { get; private set; } = new();
+        public GeneralSettings General { get; set; } = new();
 
         [JsonPropertyName("discord")]
-        public DiscordSettings Discord { get; private set; } = new();
+        public DiscordSettings Discord { get; set; } = new();
 
         [JsonPropertyName("database")]
-        public DatabaseSettings Database { get; private set; } = new();
+        public DatabaseSettings Database { get; set; } = new();
 
         [JsonPropertyName("matchmaking")]
-        public MatchmakingSettings Matchmaking { get; private set; } = new();
+        public MatchmakingSettings Matchmaking { get; set; } = new();
 
         [JsonPropertyName("glicko2")]
-        public Glicko2Settings Glicko2 { get; private set; } = new();
+        public Glicko2Settings Glicko2 { get; set; } = new();
     }
 
     public class GeneralSettings

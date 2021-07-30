@@ -1,21 +1,26 @@
 // Copyright (C) 2021 mazziechai
 // 
-// This file is part of Dongurigaeru.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
 // 
-// Dongurigaeru is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-// 
-// Dongurigaeru is distributed in the hope that it will be useful,
+// This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
+// GNU Affero General Public License for more details.
 // 
-// You should have received a copy of the GNU General Public License
-// along with Dongurigaeru.  If not, see <http://www.gnu.org/licenses/>.
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Dongurigaeru.Core.Ranked;
 using Hydrangea.Glicko2;
+using Hydrangea.Glicko2.Interfaces;
+using Microsoft.Extensions.Hosting;
 
 namespace Dongurigaeru.Services.Ranked
 {
@@ -25,13 +30,46 @@ namespace Dongurigaeru.Services.Ranked
     public class CalculatorService
     {
         // Service dependencies
-        private SettingsService _settings;
-        private DatabaseService _db;
+        private readonly SettingsService _settings;
+        private readonly RatingPeriodService _ratingPeriod;
 
-        public CalculatorService(SettingsService settings, DatabaseService db)
+        private readonly ICalculator _calculator;
+
+        public CalculatorService(SettingsService settings, RatingPeriodService ratingPeriod)
         {
             _settings = settings;
-            _db = db;
+            _ratingPeriod = ratingPeriod;
+
+            _calculator = new Calculator()
+            {
+                StandardRating = _settings.Settings.Glicko2.Rating.Rating,
+                VolatilityConstraint = _settings.Settings.Glicko2.Rating.VolatilityConstraint,
+                ConvergenceTolerance = _settings.Settings.Glicko2.Rating.ConvergenceTolerance
+            };
+
+            _ratingPeriod.RatingPeriodEndedEvent += HandleRatingPeriodEnded;
+        }
+
+        protected async void HandleRatingPeriodEnded(object sender, RatingPeriodEndedEventArgs e)
+        {
+            await Task.Run(() =>
+            {
+                HashSet<Player> updatedPlayers = new();
+
+                foreach (var player in e.RatingPeriod.Players)
+                {
+                    updatedPlayers.Add(
+                        (Player)_calculator.Rate(
+                            player, _ratingPeriod.RatingPeriod.GetParticipantResults(player)));
+                }
+
+                foreach (var rating in updatedPlayers)
+                {
+                    rating.FinalizeChanges();
+                }
+
+                _ratingPeriod.RatingPeriod.Players = updatedPlayers;
+            });
         }
     }
 }

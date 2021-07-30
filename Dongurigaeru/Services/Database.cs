@@ -1,23 +1,22 @@
 // Copyright (C) 2021 mazziechai
 // 
-// This file is part of Dongurigaeru.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
 // 
-// Dongurigaeru is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-// 
-// Dongurigaeru is distributed in the hope that it will be useful,
+// This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
+// GNU Affero General Public License for more details.
 // 
-// You should have received a copy of the GNU General Public License
-// along with Dongurigaeru.  If not, see <http://www.gnu.org/licenses/>.
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Dongurigaeru.Core.Ranked;
 using Dongurigaeru.Data;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -47,12 +46,12 @@ namespace Dongurigaeru.Services
         /// </summary>
         /// <param name="players"></param>
         /// <returns></returns>
-        public async Task UpdatePlayers(List<PlayerInfo> players)
+        public async Task UpdatePlayers(List<Player> players)
         {
             using var db = Context;
             foreach (var player in players)
             {
-                var query = await db.Players.FindAsync(player.DiscordId);
+                var query = await db.Players.FindAsync(player.Id);
 
                 if (query is not null)
                 {
@@ -68,10 +67,9 @@ namespace Dongurigaeru.Services
 
     public class DatabaseContext : DbContext
     {
-        public DbSet<PlayerInfo> Players { get; set; }
+        public DbSet<Player> Players { get; set; }
         public DbSet<Match> Matches { get; set; }
-        public DbSet<RatingPeriod> RatingPeriods { get; set; }
-        public DbSet<PendingMatch> PendingMatches { get; set; }
+        public DbSet<MatchRatingPeriod> RatingPeriods { get; set; }
 
         private readonly string _connectionString;
 
@@ -90,6 +88,13 @@ namespace Dongurigaeru.Services
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite(_connectionString);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            new PlayerEntityTypeConfiguration().Configure(modelBuilder.Entity<Player>());
+            new MatchEntityTypeConfiguration().Configure(modelBuilder.Entity<Match>());
+            new RatingPeriodEntityTypeConfiguration().Configure(modelBuilder.Entity<MatchRatingPeriod>());
         }
     }
 }
