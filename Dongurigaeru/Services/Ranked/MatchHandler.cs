@@ -62,7 +62,7 @@ namespace Dongurigaeru.Services.Ranked
 
         protected async void HandleMatchCompleted(object sender, EventArgs e)
         {
-            await Task.Run(() => 
+            await Task.Run(() =>
             {
                 _ratingPeriod.RatingPeriod.AddMatch(sender as Match);
                 Matches.Remove(sender as Match);
